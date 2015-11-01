@@ -1,0 +1,27 @@
+{
+  "name": "cloudplayer",
+  "productName": "Cloud Player",
+  "version": "0.0.1",
+  "description": "Desktop player for soundcloud.com",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build-js -- -s && electron .",
+    "build-js": "mkdirp static/js && babel src --out-dir static/js --stage 0",
+    "watch": "mkdirp static/js && babel src --out-dir static/js -w --stage 0 -s"
+  },
+  "author": "Martin Laine",
+  "license": "ISC",
+  "dependencies": {
+    "alt": "^0.17.8",
+    "electron-prebuilt": "^0.34.2",
+    "fs-extra": "^0.26.0",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
+    "soundcloud": "^3.0.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel": "^5.0.0",
+    "mkdirp": "^0.5.1"
+  }
+}
