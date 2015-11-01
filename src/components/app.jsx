@@ -1,6 +1,7 @@
 import React from "react"
 import BaseComponent from "./base_component"
-import remote from "remote"
+import TrackList from "./track_list"
+import Player from "./player"
 
 export default class App extends BaseComponent {
   constructor(props, context) {
@@ -9,11 +10,12 @@ export default class App extends BaseComponent {
   }
 
   componentDidMount() {
-    // Listen to stores
+    this.context.flux.getStore("TrackStore").listen(this.handleChange.bind(this))
   }
 
   getStoreState() {
     return {
+      trackStore: this.context.flux.getStore("TrackStore").getState()
     }
   }
 
@@ -23,7 +25,11 @@ export default class App extends BaseComponent {
 
   render() {
     return (
-      <h1>Cloud player</h1>
+      <div>
+        <h1>Cloud player</h1>
+        <Player currentTrack={this.state.trackStore.currentTrack} />
+        <TrackList tracks={this.state.trackStore.tracks} />
+      </div>
     )
   }
 }

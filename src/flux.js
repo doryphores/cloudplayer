@@ -3,6 +3,8 @@ import remote from "remote"
 import fs from "fs-extra"
 import path from "path"
 import _ from "underscore"
+import TrackActions from "./actions/track_actions"
+import TrackStore from "./stores/track_store"
 
 const app = remote.require("app")
 
@@ -15,6 +17,10 @@ const SNAPSHOT_FILE = path.join(
 export default class Flux extends Alt {
   constructor(config = {}) {
     super(config)
+
+    this.addActions("TrackActions", TrackActions)
+
+    this.createStore(TrackStore)
 
     // Restore previous store state
     this.restoreSnapshot()
