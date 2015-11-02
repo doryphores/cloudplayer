@@ -10,10 +10,6 @@ SC.initialize({
 })
 
 export default class SoundCloud {
-  constructor() {
-    this.player = null
-  }
-
   fetchTracks() {
     return SC.resolve(`https://soundcloud.com/${USER_NAME}`).then(user => {
       return SC.get(`/users/${user.id}/followings`)
@@ -27,20 +23,6 @@ export default class SoundCloud {
   }
 
   stream(track_id) {
-    return SC.stream(`/tracks/${track_id}`).then(player => {
-      this.player = player
-    })
-  }
-
-  play() {
-    if (this.player) {
-      this.player.play()
-    }
-  }
-
-  pause() {
-    if (this.player) {
-      this.player.pause()
-    }
+    return SC.stream(`/tracks/${track_id}`)
   }
 }

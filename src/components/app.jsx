@@ -2,33 +2,30 @@ import React from "react"
 import BaseComponent from "./base_component"
 import TrackList from "./track_list"
 import Player from "./player"
+import connectToStores from "alt/utils/connectToStores"
 
+@connectToStores
 export default class App extends BaseComponent {
-  constructor(props, context) {
-    super(props, context)
-    this.state = this.getStoreState()
+  static getStores(_props, context) {
+    return [
+      context.flux.stores.TrackStore,
+      context.flux.stores.PlayerStore
+    ]
   }
 
-  componentDidMount() {
-    this.context.flux.getStore("TrackStore").listen(this.handleChange.bind(this))
-  }
-
-  getStoreState() {
+  static getPropsFromStores(_props, context) {
     return {
-      trackStore: this.context.flux.getStore("TrackStore").getState()
+      trackStore  : context.flux.stores.TrackStore.getState(),
+      playerStore : context.flux.stores.PlayerStore.getState()
     }
-  }
-
-  handleChange() {
-    this.setState(this.getStoreState())
   }
 
   render() {
     return (
       <div>
         <h1>Cloud player</h1>
-        <Player currentTrack={this.state.trackStore.currentTrack} />
-        <TrackList tracks={this.state.trackStore.tracks} />
+        <Player playerStore={this.props.playerStore} />
+        <TrackList tracks={this.props.trackStore.tracks} />
       </div>
     )
   }

@@ -5,6 +5,8 @@ import path from "path"
 import _ from "underscore"
 import TrackActions from "./actions/track_actions"
 import TrackStore from "./stores/track_store"
+import PlayerActions from "./actions/player_actions"
+import PlayerStore from "./stores/player_store"
 
 const app = remote.require("app")
 
@@ -19,8 +21,10 @@ export default class Flux extends Alt {
     super(config)
 
     this.addActions("TrackActions", TrackActions)
+    this.addActions("PlayerActions", PlayerActions)
 
     this.createStore(TrackStore)
+    this.createStore(PlayerStore)
 
     // Restore previous store state
     this.restoreSnapshot()
