@@ -8,15 +8,19 @@
     "url": "https://github.com/doryphores/cloudplayer"
   },
   "scripts": {
-    "start": "npm run build-js -- -s && electron app",
+    "start": "npm run watch & electron app",
     "build-js": "mkdirp app/static/js && babel app/src --out-dir app/static/js --stage 0",
-    "watch": "mkdirp app/static/js && babel app/src --out-dir app/static/js -w --stage 0 -s"
+    "watch-js": "mkdirp app/static/js && babel app/src --out-dir app/static/js -w --stage 0 -s",
+    "build-css": "mkdirp app/static/css && node-sass app/sass/app.sass -o app/static/css",
+    "watch-css": "mkdirp app/static/css && node-sass app/sass/app.sass -o app/static/css -w",
+    "watch": "npm run watch-css & npm run watch-js"
   },
   "author": "Martin Laine",
   "license": "ISC",
   "dependencies": {
     "babel": "^5.8.29",
     "electron-prebuilt": "^0.34.2",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "node-sass": "^3.4.1"
   }
 }
