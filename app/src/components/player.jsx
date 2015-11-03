@@ -7,6 +7,7 @@ export default class Player extends BaseComponent {
   }
 
   buttonLabel() {
+    if (this.props.playerStore.buffering) return "Loading..."
     return this.props.playerStore.playing ? "Pause" : "Play"
   }
 

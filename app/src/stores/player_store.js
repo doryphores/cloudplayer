@@ -7,13 +7,15 @@ export default class PlayerStore {
   static config = {
     onDeserialize(data) {
       _.defaults(data, PlayerStore.defaultState)
-      data.playing = false
+      data.playing   = false
+      data.buffering = false
       return data
     }
   }
 
   static defaultState = {
     playing      : false,
+    buffering    : false,
     volume       : 50,
     currentTime  : 0,
     progress     : 0,
@@ -61,6 +63,10 @@ export default class PlayerStore {
   }
 
   startStream() {
+    this.setState({
+      buffering: true
+    })
+
     soundcloud.stream(this.state.currentTrack.id).then(player => {
       this.player = player
 
@@ -68,6 +74,18 @@ export default class PlayerStore {
         this.setState({
           currentTime : this.player.currentTime(),
           progress    : this.player.currentTime() / this.state.currentTrack.duration
+        })
+      })
+
+      this.player.on("buffering_start", () => {
+        this.setState({
+          buffering: true
+        })
+      })
+
+      this.player.on("buffering_end", () => {
+        this.setState({
+          buffering: false
         })
       })
 
@@ -87,6 +105,17 @@ export default class PlayerStore {
         this.player.on("play-resume", () => {
           this.player.seek(this.state.currentTime)
           this.player.off("play-resume")
+          this.player.on("play-resume", () => {
+            this.setState({
+              buffering: false
+            })
+          })
+        })
+      } else {
+        this.player.on("play-resume", () => {
+          this.setState({
+            buffering: false
+          })
         })
       }
 
