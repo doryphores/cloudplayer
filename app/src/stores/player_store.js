@@ -53,9 +53,11 @@ export default class PlayerStore {
   }
 
   unload() {
-    this.player.off("time")
-    this.player.off("finish")
-    this.player.pause()
+    if (this.player) {
+      this.player.off("time")
+      this.player.off("finish")
+      this.player.pause()
+    }
   }
 
   startStream() {
