@@ -8,6 +8,7 @@ import connectToStores from "alt/utils/connectToStores"
 export default class App extends BaseComponent {
   static getStores(_props, context) {
     return [
+      context.flux.stores.ArtistStore,
       context.flux.stores.TrackStore,
       context.flux.stores.PlayerStore
     ]
@@ -15,6 +16,7 @@ export default class App extends BaseComponent {
 
   static getPropsFromStores(_props, context) {
     return {
+      artistStore : context.flux.stores.ArtistStore.getState(),
       trackStore  : context.flux.stores.TrackStore.getState(),
       playerStore : context.flux.stores.PlayerStore.getState()
     }
@@ -25,7 +27,8 @@ export default class App extends BaseComponent {
       <div>
         <h1>Cloud player</h1>
         <Player playerStore={this.props.playerStore} />
-        <TrackList tracks={this.props.trackStore.tracks} />
+        <TrackList tracks={this.props.trackStore}
+                   artists={this.props.artistStore}/>
       </div>
     )
   }

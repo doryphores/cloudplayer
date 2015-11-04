@@ -1,38 +1,45 @@
-import SoundCloud from "../utils/soundcloud"
 import _ from "underscore"
 
-const soundcloud = new SoundCloud()
-
 export default class TrackStore {
-  constructor() {
-    this.state = {
-      tracks       : [],
-      currentTrack : null
+  static config = {
+    onDeserialize(data) {
+      return _.pick(_.defaults(data, TrackStore.defaultState),
+        _.keys(TrackStore.defaultState))
     }
+  }
 
-    const TrackActions = this.alt.getActions("TrackActions")
+  static defaultState = {
+    list     : [],
+    selected : null
+  }
+
+  constructor() {
+    this.state = Object.assign({}, TrackStore.defaultState)
 
     this.bindListeners({
-      fetchTracks : TrackActions.REFRESH,
-      select      : TrackActions.SELECT,
+      refresh : this.alt.actions.BrowserActions.REFRESH_SUCCESS,
+      select  : this.alt.actions.BrowserActions.SELECT_TRACK
     })
+
+    this.exportPublicMethods({
+      forArtist: this.forArtist
+    })
+  }
+
+  forArtist(id) {
+    return this.state.list.filter(track => track.user_id == id)
   }
 
   select(id) {
     this.setState({
-      currentTrack: _.find(this.state.tracks, track => track.id == id)
+      selected: _.find(this.state.list, track => track.id == id)
     })
   }
 
-  fetchTracks() {
+  refresh(tracks) {
     this.setState({
-      tracks: []
-    })
-
-    soundcloud.fetchTracks().then(tracks => {
-      this.setState({
-        tracks: tracks
-      })
+      list     : tracks,
+      selected : this.state.selected && _.findWhere(tracks, {id: this.state.selected.id})
     })
   }
 }

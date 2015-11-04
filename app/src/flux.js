@@ -3,7 +3,8 @@ import remote from "remote"
 import fs from "fs-extra"
 import path from "path"
 import _ from "underscore"
-import TrackActions from "./actions/track_actions"
+import BrowserActions from "./actions/browser_actions"
+import ArtistStore from "./stores/artist_store"
 import TrackStore from "./stores/track_store"
 import PlayerActions from "./actions/player_actions"
 import PlayerStore from "./stores/player_store"
@@ -20,9 +21,10 @@ export default class Flux extends Alt {
   constructor(config = {}) {
     super(config)
 
-    this.addActions("TrackActions", TrackActions)
+    this.addActions("BrowserActions", BrowserActions)
     this.addActions("PlayerActions", PlayerActions)
 
+    this.createStore(ArtistStore)
     this.createStore(TrackStore)
     this.createStore(PlayerStore)
 

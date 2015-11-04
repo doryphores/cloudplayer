@@ -3,11 +3,23 @@ import BaseComponent from "./base_component"
 
 export default class TrackList extends BaseComponent {
   refresh() {
-    this.context.flux.getActions("TrackActions").refresh()
+    this.context.flux.actions.BrowserActions.refresh()
   }
 
-  select(id) {
-    this.context.flux.getActions("TrackActions").select(id)
+  selectTrack(id) {
+    this.context.flux.actions.BrowserActions.selectTrack(id)
+  }
+
+  selectArtist(e) {
+    this.context.flux.actions.BrowserActions.selectArtist(e.target.value)
+  }
+
+  filteredTracks() {
+    if (this.props.artists.selected) {
+      return this.context.flux.stores.TrackStore.forArtist(this.props.artists.selected.id)
+    } else {
+      return this.props.tracks.list
+    }
   }
 
   render() {
@@ -15,10 +27,18 @@ export default class TrackList extends BaseComponent {
       <div>
         <h2>Track list</h2>
         <button onClick={this.refresh.bind(this)}>Refresh</button>
-        <ul>
-          {this.props.tracks.map((track, index) => {
+        <select value={this.props.artists.selected.id} onChange={this.selectArtist.bind(this)}>
+          <option value="__ALL__">All</option>
+          {this.props.artists.list.map(user => {
             return (
-              <li key={index} onDoubleClick={this.select.bind(this, track.id)}>{track.title}</li>
+              <option value={user.id} key={user.id}>{user.username}</option>
+            )
+          })}
+        </select>
+        <ul>
+          {this.filteredTracks().map(track => {
+            return (
+              <li key={track.id} onDoubleClick={this.selectTrack.bind(this, track.id)}>{track.title}</li>
             )
           })}
         </ul>

@@ -27,14 +27,11 @@ export default class PlayerStore {
 
     this.player = null
 
-    const PlayerActions = this.alt.getActions("PlayerActions")
-    const TrackActions = this.alt.getActions("TrackActions")
-
     this.bindListeners({
-      load   : TrackActions.SELECT,
-      toggle : PlayerActions.TOGGLE,
-      play   : PlayerActions.PLAY,
-      pause  : PlayerActions.PAUSE
+      load   : this.alt.actions.BrowserActions.SELECT_TRACK,
+      toggle : this.alt.actions.PlayerActions.TOGGLE,
+      play   : this.alt.actions.PlayerActions.PLAY,
+      pause  : this.alt.actions.PlayerActions.PAUSE
     })
   }
 
@@ -43,7 +40,7 @@ export default class PlayerStore {
 
     this.waitFor(this.alt.stores.TrackStore)
 
-    let currentTrack = this.alt.stores.TrackStore.getState().currentTrack
+    let currentTrack = this.alt.stores.TrackStore.getState().selected
 
     this.setState({
       currentTrack : currentTrack,
