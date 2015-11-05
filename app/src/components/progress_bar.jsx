@@ -6,7 +6,8 @@ export default class ProgressBar extends BaseComponent {
     super(props)
     this.state = {
       dragging       : false,
-      sliderPosition : props.progress
+      sliderPosition : props.progress,
+      currentTime    : props.currentTime
     }
 
     this.onMouseMove = this.drag.bind(this)
@@ -16,7 +17,8 @@ export default class ProgressBar extends BaseComponent {
   componentWillReceiveProps(nextProps) {
     if (!this.state.dragging) {
       this.setState({
-        sliderPosition: nextProps.progress
+        sliderPosition : nextProps.progress,
+        currentTime    : nextProps.currentTime
       })
     }
   }
@@ -31,17 +33,21 @@ export default class ProgressBar extends BaseComponent {
   }
 
   startDrag(e) {
+    let progress = this.translateMousePosition(e.clientX)
     this.setState({
       dragging       : true,
-      sliderPosition : this.translateMousePosition(e.clientX)
+      sliderPosition : progress,
+      currentTime    : this.props.duration * progress
     })
     document.addEventListener("mousemove", this.onMouseMove)
     document.addEventListener("mouseup"  , this.onMouseUp)
   }
 
   drag(e) {
+    let progress = this.translateMousePosition(e.clientX)
     this.setState({
-      sliderPosition: this.translateMousePosition(e.clientX)
+      sliderPosition : progress,
+      currentTime    : this.props.duration * progress
     })
   }
 
