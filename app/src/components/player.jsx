@@ -1,5 +1,6 @@
 import React from "react"
 import BaseComponent from "./base_component"
+import ProgressBar from "./progress_bar"
 
 export default class Player extends BaseComponent {
   toggle() {
@@ -11,24 +12,15 @@ export default class Player extends BaseComponent {
     return this.props.playerStore.playing ? "Pause" : "Play"
   }
 
-  formatTime(timestamp) {
-    let d = new Date(timestamp)
-    return [
-      d.getHours(),
-      d.getMinutes(),
-      d.getSeconds()
-    ].map(t => t < 10 ? `0${t}` : t).join(":").replace(/^00:/, "")
-  }
-
   render() {
-    if (!this.props.playerStore.currentTrack) return null
+    if (!this.props.playerStore.track) return null
 
     return (
-      <div>
-        <h2>Player</h2>
-        <div>Current track: {this.props.playerStore.currentTrack.title}</div>
-        <div>Time: {this.formatTime(this.props.playerStore.currentTime)} / {this.formatTime(this.props.playerStore.currentTrack.duration)}</div>
-        <div>Progress: {Math.round(this.props.playerStore.progress * 100)}%</div>
+      <div className="player">
+        <div>Current track: {this.props.playerStore.track.title}</div>
+        <ProgressBar currentTime={this.props.playerStore.currentTime}
+                     duration={this.props.playerStore.track.duration}
+                     progress={this.props.playerStore.progress}/>
         <button onClick={this.toggle.bind(this)}>{this.buttonLabel()}</button>
       </div>
     )

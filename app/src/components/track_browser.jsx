@@ -1,7 +1,7 @@
 import React from "react"
 import BaseComponent from "./base_component"
 
-export default class TrackList extends BaseComponent {
+export default class TrackBrowser extends BaseComponent {
   refresh() {
     this.context.flux.actions.BrowserActions.refresh()
   }

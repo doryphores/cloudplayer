@@ -1,6 +1,6 @@
 import React from "react"
 import BaseComponent from "./base_component"
-import TrackList from "./track_list"
+import TrackBrowser from "./track_browser"
 import Player from "./player"
 import connectToStores from "alt/utils/connectToStores"
 
@@ -27,8 +27,8 @@ export default class App extends BaseComponent {
       <div>
         <h1>Cloud player</h1>
         <Player playerStore={this.props.playerStore} />
-        <TrackList tracks={this.props.trackStore}
-                   artists={this.props.artistStore}/>
+        <TrackBrowser tracks={this.props.trackStore}
+                      artists={this.props.artistStore} />
       </div>
     )
   }

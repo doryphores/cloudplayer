@@ -10,4 +10,8 @@ export default class PlayerActions {
   pause() {
     this.dispatch()
   }
+
+  seek(position) {
+    this.dispatch(position)
+  }
 }
