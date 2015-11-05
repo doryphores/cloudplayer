@@ -1,0 +1,33 @@
+html
+  overflow: hidden
+
+body, html
+  height: 100%
+  margin: 0
+  padding: 0
+
+.app-container
+  width: 100%
+  height: 100%
+
+.u-container
+  display: flex
+  align-items: stretch
+  height: 100%
+  width: 100%
+
+.u-container--horizontal
+  flex-direction: row
+
+.u-container--vertical
+  flex-direction: column
+
+.u-panel
+  flex: 0 1 auto
+  height: auto
+
+.u-panel--grow
+  flex: 1
+
+  .u-container--vertical > &
+    height: 100%

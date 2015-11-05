@@ -16,7 +16,7 @@ export default class Player extends BaseComponent {
     if (!this.props.playerStore.track) return null
 
     return (
-      <div className="player">
+      <div className="player u-panel">
         <div className="player__button" onClick={this.toggle.bind(this)}>
           <i className="icon">{this.buttonIcon().toLowerCase()}</i>
         </div>

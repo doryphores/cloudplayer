@@ -37,7 +37,7 @@ export default class App extends BaseComponent {
 
   render() {
     return (
-      <div>
+      <div className="app u-container u-container--vertical">
         <Player playerStore={this.props.playerStore} />
         <TrackBrowser tracks={this.props.trackStore}
                       artists={this.props.artistStore} />
