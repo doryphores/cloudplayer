@@ -1,5 +1,6 @@
 import React from "react"
 import BaseComponent from "./base_component"
+import {formatTime} from "../utils/helpers"
 
 export default class ProgressBar extends BaseComponent {
   constructor(props) {
@@ -68,20 +69,11 @@ export default class ProgressBar extends BaseComponent {
     }
   }
 
-  formatTime(timestamp) {
-    let d = new Date(timestamp)
-    return [
-      d.getHours(),
-      d.getMinutes(),
-      d.getSeconds()
-    ].map(t => t < 10 ? `0${t}` : t).join(":").replace(/^00:/, "")
-  }
-
   render() {
     return (
       <div className="progress-bar">
         <div className="progress-bar__time">
-          {this.formatTime(this.props.currentTime)}
+          {formatTime(this.state.currentTime)}
         </div>
         <div ref="slider" className="progress-bar__slider"
              onMouseDown={this.startDrag.bind(this)}>
@@ -91,7 +83,7 @@ export default class ProgressBar extends BaseComponent {
           <div className="progress-bar__handle" style={this.handleStyles()}/>
         </div>
         <div className="progress-bar__duration">
-          {this.formatTime(this.props.duration)}
+          {formatTime(this.props.duration)}
         </div>
       </div>
     )
