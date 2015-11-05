@@ -21,8 +21,6 @@ app.on("ready", function() {
     icon: __dirname + "/static/images/icon.png"
   });
 
-  mainWindow.maximize()
-
   // and load the index.html of the app.
   mainWindow.loadUrl("file://" + __dirname + "/static/index.html");
 

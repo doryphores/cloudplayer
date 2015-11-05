@@ -1,3 +1,4 @@
+import remote from "remote"
 import React from "react"
 import BaseComponent from "./base_component"
 import TrackBrowser from "./track_browser"
@@ -22,10 +23,21 @@ export default class App extends BaseComponent {
     }
   }
 
+  componentDidMount() {
+    const globalShortcut = remote.require("global-shortcut")
+
+    globalShortcut.register("MediaPlayPause", () => {
+      this.context.flux.actions.PlayerActions.toggle()
+    })
+
+    window.addEventListener("beforeunload", () => {
+      globalShortcut.unregister("MediaPlayPause")
+    })
+  }
+
   render() {
     return (
       <div>
-        <h1>Cloud player</h1>
         <Player playerStore={this.props.playerStore} />
         <TrackBrowser tracks={this.props.trackStore}
                       artists={this.props.artistStore} />
