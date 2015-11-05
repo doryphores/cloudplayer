@@ -24,8 +24,7 @@ export default class TrackBrowser extends BaseComponent {
 
   render() {
     return (
-      <div>
-        <h2>Track list</h2>
+      <div className="browser">
         <button onClick={this.refresh.bind(this)}>Refresh</button>
         <select value={this.props.artists.selected.id} onChange={this.selectArtist.bind(this)}>
           <option value="__ALL__">All</option>

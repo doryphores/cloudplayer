@@ -7,9 +7,9 @@ export default class Player extends BaseComponent {
     this.context.flux.actions.PlayerActions.toggle()
   }
 
-  buttonLabel() {
-    if (this.props.playerStore.buffering) return "Loading..."
-    return this.props.playerStore.playing ? "Pause" : "Play"
+  buttonIcon() {
+    if (this.props.playerStore.buffering) return "more_horiz"
+    return this.props.playerStore.playing ? "pause" : "play_arrow"
   }
 
   render() {
@@ -17,11 +17,14 @@ export default class Player extends BaseComponent {
 
     return (
       <div className="player">
-        <div>Current track: {this.props.playerStore.track.title}</div>
-        <ProgressBar currentTime={this.props.playerStore.currentTime}
-                     duration={this.props.playerStore.track.duration}
-                     progress={this.props.playerStore.progress}/>
-        <button onClick={this.toggle.bind(this)}>{this.buttonLabel()}</button>
+        <div className="player__button" onClick={this.toggle.bind(this)}>
+          <i className="icon">{this.buttonIcon().toLowerCase()}</i>
+        </div>
+        <div className="player__progress">
+          <ProgressBar currentTime={this.props.playerStore.currentTime}
+                       duration={this.props.playerStore.track.duration}
+                       progress={this.props.playerStore.progress}/>
+        </div>
       </div>
     )
   }
