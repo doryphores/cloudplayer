@@ -1,5 +1,6 @@
 import React from "react"
 import BaseComponent from "./base_component"
+import {formatTime} from "../utils/helpers"
 
 export default class TrackBrowser extends BaseComponent {
   refresh() {
@@ -46,7 +47,13 @@ export default class TrackBrowser extends BaseComponent {
         <ul className="browser__list u-panel u-panel--grow">
           {this.filteredTracks().map(track => {
             return (
-              <li key={track.id} onDoubleClick={this.selectTrack.bind(this, track.id)}>{track.title}</li>
+              <li className="track" key={track.id}
+                onDoubleClick={this.selectTrack.bind(this, track.id)}>
+                <img className="track__artwork" src={track.artwork_url}/>
+                <span className="track__title">{track.title}</span>
+                <span className="track__artist">{track.user.username}</span>
+                <span className="track__duration">{formatTime(track.duration)}</span>
+              </li>
             )
           })}
         </ul>
