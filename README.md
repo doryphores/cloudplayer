@@ -30,7 +30,7 @@ for local development:
 > npm start
 ```
 
-### Watch for JS changes
+### Watch for JS and CSS changes
 
 ```
 > npm run watch
