@@ -9,10 +9,10 @@
   },
   "scripts": {
     "start": "npm run build-css && npm run build-js -- -s && electron app",
-    "build-js": "mkdirp app/static/js && babel app/src --out-dir app/static/js --stage 0",
-    "watch-js": "mkdirp app/static/js && babel app/src --out-dir app/static/js -w --stage 0 -s",
-    "build-css": "mkdirp app/static/css && node-sass app/sass/ -o app/static/css/",
-    "watch-css": "mkdirp app/static/css && node-sass --watch app/sass/ -o app/static/css/",
+    "build-js": "mkdirp app/js && babel src/js --out-dir app/js --stage 0",
+    "watch-js": "mkdirp app/js && babel src/js --out-dir app/js -w --stage 0 -s",
+    "build-css": "mkdirp app/css && node-sass src/sass/ -o app/css/",
+    "watch-css": "mkdirp app/css && node-sass --watch src/sass/ -o app/css/",
     "watch": "npm run watch-css & npm run watch-js"
   },
   "author": "Martin Laine",
