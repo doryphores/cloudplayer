@@ -9,16 +9,19 @@
   },
   "scripts": {
     "start": "npm run build-css && npm run build-js -- -s && electron app",
-    "build-js": "mkdirp app/js && babel src/js --out-dir app/js --stage 0",
-    "build-css": "mkdirp app/css && node-sass src/sass -o app/css",
+    "package": "npm run build-css && npm run build-js && node scripts/package.js",
+    "build-js": "rimraf app/js && mkdirp app/js && babel src/js --out-dir app/js --stage 0",
+    "build-css": "rimraf app/css && mkdirp app/css && node-sass src/sass -o app/css",
     "watch": "npm run build-css -- -w & npm run build-js -- -w -s"
   },
   "author": "Martin Laine",
   "license": "MIT",
   "dependencies": {
     "babel": "^5.8.29",
-    "electron-prebuilt": "^0.34.2",
+    "electron-packager": "^5.1.1",
+    "electron-prebuilt": "0.34.3",
     "mkdirp": "^0.5.1",
-    "node-sass": "^3.4.1"
+    "node-sass": "^3.4.1",
+    "rimraf": "^2.4.3"
   }
 }
