@@ -1,5 +1,5 @@
 export function formatTime(timestamp) {
-  let d = new Date(timestamp)
+  let d = new Date(0, 0, 0, 0, 0, 0, timestamp)
   return [
     d.getHours(),
     d.getMinutes(),
