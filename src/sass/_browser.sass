@@ -1,11 +1,41 @@
 .browser__tool-bar
   padding: 10px
+  border-bottom: 2px solid #5c5a55
 
 .browser__list
   overflow: auto
   padding: 0
   margin: 0
   list-style: none
+
+.artist-list
+  width: 300px
+  border-right: 2px solid #5c5a55
+
+.artist
+  box-sizing: border-box
+  position: relative
+  margin: 0
+  padding: 5px 10px 5px 50px
+  border-top: 1px solid #5c5a55
+
+  &:first-child
+    border: none
+
+  &:hover
+    background: rgba(0,0,0,.2)
+
+  &.artist--selected
+    background: black
+
+.artist__avatar
+  position: absolute
+  top: 5px
+  left: 5px
+  height: 30px
+
+.artist__name
+  line-height: 30px
 
 .track
   box-sizing: border-box
@@ -14,6 +44,15 @@
   margin: 0
   padding: 10px 10px 10px 70px
   border-top: 1px solid #5c5a55
+
+  &:first-child
+    border: none
+
+  &:hover
+    background: rgba(0,0,0,.2)
+
+  &.track--selected
+    background: black
 
 .track__artwork
   position: absolute

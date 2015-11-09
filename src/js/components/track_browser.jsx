@@ -1,6 +1,7 @@
 import React from "react"
 import BaseComponent from "./base_component"
 import {formatTime} from "../utils/helpers"
+import classnames from "classnames"
 
 export default class TrackBrowser extends BaseComponent {
   refresh() {
@@ -11,8 +12,9 @@ export default class TrackBrowser extends BaseComponent {
     this.context.flux.actions.BrowserActions.selectTrack(id)
   }
 
-  selectArtist(e) {
-    this.context.flux.actions.BrowserActions.selectArtist(e.target.value)
+  selectArtist(id) {
+    if (typeof id == "object") id = e.target.value
+    this.context.flux.actions.BrowserActions.selectArtist(id)
   }
 
   filteredTracks() {
@@ -23,11 +25,19 @@ export default class TrackBrowser extends BaseComponent {
     }
   }
 
-  artistFilterValue() {
-    if (this.props.artists.selected) {
-      return this.props.artists.selected.id
-    }
-    return "__ALL__"
+  artistClassNames(id) {
+    return classnames("artist", {
+      "artist--selected": (
+        this.props.artists.selected && this.props.artists.selected.id == id ||
+        !this.props.artists.selected && id == "ALL"
+      )
+    })
+  }
+
+  trackClassNames(id) {
+    return classnames("track", {
+      "track--selected": this.props.tracks.selected && this.props.tracks.selected.id == id
+    })
   }
 
   render() {
@@ -35,28 +45,35 @@ export default class TrackBrowser extends BaseComponent {
       <div className="browser u-panel u-panel--grow u-container u-container--vertical">
         <div className="browser__tool-bar u-panel">
           <button onClick={this.refresh.bind(this)}>Refresh</button>
-          <select value={this.artistFilterValue()} onChange={this.selectArtist.bind(this)}>
-            <option value="__ALL__">All</option>
+        </div>
+        <div className="u-panel--grow u-container u-container--horizontal">
+          <ul className="browser__list artist-list u-panel">
+            <li className={this.artistClassNames("ALL")} onClick={this.selectArtist.bind(this, "__ALL__")}>
+              <span className="artist__name">All</span>
+            </li>
             {this.props.artists.list.map(user => {
               return (
-                <option value={user.id} key={user.id}>{user.username}</option>
+                <li className={this.artistClassNames(user.id)} key={user.id} onClick={this.selectArtist.bind(this, user.id)}>
+                  <img className="artist__avatar" src={user.avatar_url}/>
+                  <span className="artist__name">{user.username}</span>
+                </li>
               )
             })}
-          </select>
+          </ul>
+          <ul className="browser__list track-list u-panel u-panel--grow">
+            {this.filteredTracks().map(track => {
+              return (
+                <li className={this.trackClassNames(track.id)} key={track.id}
+                  onDoubleClick={this.selectTrack.bind(this, track.id)}>
+                  <img className="track__artwork" src={track.artwork_url}/>
+                  <span className="track__title">{track.title}</span>
+                  <span className="track__artist">{track.user.username}</span>
+                  <span className="track__duration">{formatTime(track.duration)}</span>
+                </li>
+              )
+            })}
+          </ul>
         </div>
-        <ul className="browser__list u-panel u-panel--grow">
-          {this.filteredTracks().map(track => {
-            return (
-              <li className="track" key={track.id}
-                onDoubleClick={this.selectTrack.bind(this, track.id)}>
-                <img className="track__artwork" src={track.artwork_url}/>
-                <span className="track__title">{track.title}</span>
-                <span className="track__artist">{track.user.username}</span>
-                <span className="track__duration">{formatTime(track.duration)}</span>
-              </li>
-            )
-          })}
-        </ul>
       </div>
     )
   }

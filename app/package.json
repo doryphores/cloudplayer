@@ -8,6 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "alt": "^0.17.8",
+    "classnames": "^2.2.0",
     "fs-extra": "^0.26.0",
     "react": "^0.14.1",
     "react-dom": "^0.14.1",
